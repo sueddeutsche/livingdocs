@@ -18,7 +18,7 @@ Just as with a database you need to write data migrations if you make structural
 
 The next chapter will describe which kinds of design changes require you to write a migration script and which ones can be handled with a simple version bump. The section after that will show you the structure of a migration script. After that we look at the grunt task to help you run migrations and last but not least we'll present some examples of migration scripts.
 
-## Migrations from design changes
+## Migrations due to design changes
 
 (If you don't know much about designs yet, we advise to read up about them [here](../design/create_designs))
 
@@ -27,6 +27,7 @@ The following changes require a data migration:
 - removing a directive from a component
 - renaming a directive in a component
 - changing the type of a directive (e.g. from `doc-editable` to `doc-image`)
+- renaming or removing a component
 
 The following changes do not require a data migration, but can be done with a simple [version bump](#the-data-migration-grunt-task). Note though that depending on the case you still might want to write a migration, it's just not mandatory, i.e. Livingdocs won't crash if you don't.
 - HTML or CSS changes that don't affect the structure
