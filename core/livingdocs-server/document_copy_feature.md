@@ -137,3 +137,26 @@ if config matches source(design/layout) && target(design/layout)
 else
   doNothing()
 ```
+
+
+## Custom downstream transformations
+
+There may be need for certain downstream specific modifications before saving the copied document. Sample use cases
+would be applying metadata of the source document to custom data of the target document, or passing document content
+through a third party library (such as a naughty word filter, an e-mail address obfuscator etc.).
+
+For these cases we need to implement the `onConversionDone` method in our conversion instructions. It gets called
+with the `sourceDocument` and the copied `targetDocument`, any changes to `targetDocument` will be applied before
+saving it.
+
+The following example anonymizes the author name if it is blacklisted and adds it to a header component.
+```coffee
+  onConversionDone: ({sourceDocument, targetDocument}) ->
+    authorName = sourceDocument.metadata.author
+    if authorName in anonymousAuthors
+      authorName = 'Anonymous'
+
+    setMetadata(authorName, targetDocument)
+    headerComponent = getOrCreateHeaderComponent(targetDocument)
+    headerComponent.setDirective('author', authorName)
+```
